@@ -48,7 +48,7 @@ Select **Networking** and then select **Application Gateway** in the **Featured*
 
 1. On the **Basics** tab, enter these values for the following application gateway settings:
 
-   - **Resource group**: Select **myResourceGroupAG** for the resource group. If it doesn't exist, select **Create new** to create it.
+   - **Resource group**: Select **AZ500-WAFAG-RG** for the resource group. If it doesn't exist, select **Create new** to create it.
    - **Application gateway name**: Enter *myAppGateway* for the name of the application gateway.
    - **Tier**: select **WAF V2**.
 
@@ -58,13 +58,13 @@ Select **Networking** and then select **Application Gateway** in the **Featured*
 
     Under **Configure virtual network**, create a new virtual network by selecting **Create new**. In the **Create virtual network** window that opens, enter the following values to create the virtual network and two subnets:
 
-    - **Name**: Enter *myVNet* for the name of the virtual network.
+    - **Name**: Enter *AZ500-WAFAG-VN01* for the name of the virtual network.
 
-    - **Subnet name** (Application Gateway subnet): The **Subnets** grid will show a subnet named *Default*. Change the name of this subnet to *myAGSubnet*.<br>The application gateway subnet can contain only application gateways. No other resources are allowed.
+    - **Subnet name** (Application Gateway subnet): The **Subnets** grid will show a subnet named *Default*. Change the name of this subnet to *AZ500-WAFAG-SN01*.<br>The application gateway subnet can contain only application gateways. No other resources are allowed.
 
-    - **Subnet name** (backend server subnet): In the second row of the **Subnets** grid, enter *myBackendSubnet* in the **Subnet name** column.
+    - **Subnet name** (backend server subnet): In the second row of the **Subnets** grid, enter *AZ500-WAFAG-BESN01* in the **Subnet name** column.
 
-    - **Address range** (backend server subnet): In the second row of the **Subnets** Grid, enter an address range that doesn't overlap with the address range of *myAGSubnet*. For example, if the address range of *myAGSubnet* is 10.0.0.0/24, enter *10.0.1.0/24* for the address range of *myBackendSubnet*.
+    - **Address range** (backend server subnet): In the second row of the **Subnets** Grid, enter an address range that doesn't overlap with the address range of *AZ500-WAFAG-SN01*. For example, if the address range of *AZ500-WAFAG-SN01* is 10.0.0.0/24, enter *10.0.1.0/24* for the address range of *AZ500-WAFAG-BESN01*.
 
     Select **OK** to close the **Create virtual network** window and save the virtual network settings.
 
@@ -78,7 +78,7 @@ Select **Networking** and then select **Application Gateway** in the **Featured*
    > [!NOTE]
    > For the Application Gateway v2 SKU, you can only choose **Public** frontend IP configuration. Private frontend IP configuration is currently not enabled for this v2 SKU.
 
-2. Choose **Create new** for the **Public IP address** and enter *myAGPublicIPAddress* for the public IP address name, and then select **OK**. 
+2. Choose **Create new** for the **Public IP address** and enter *AZ500-WAFAG-PIP01* for the public IP address name, and then select **OK**. 
 
      ![Create new application gateway: frontends](../media/application-gateway-web-application-firewall-portal/application-gateway-create-frontends.png)
 
@@ -92,7 +92,7 @@ The backend pool is used to route requests to the backend servers that serve the
 
 2. In the **Add a backend pool** window that opens, enter the following values to create an empty backend pool:
 
-    - **Name**: Enter *myBackendPool* for the name of the backend pool.
+    - **Name**: Enter *AZ500-WAFAG-BEP* for the name of the backend pool.
     - **Add backend pool without targets**: Select **Yes** to create a backend pool with no targets. You'll add backend targets after creating the application gateway.
 
 3. In the **Add a backend pool** window, select **Add** to save the backend pool configuration and return to the **Backends** tab.
@@ -107,20 +107,20 @@ On the **Configuration** tab, you'll connect the frontend and backend pool you c
 
 1. Select **Add a rule** in the **Routing rules** column.
 
-2. In the **Add a routing rule** window that opens, enter *myRoutingRule* for the **Rule name**.
+2. In the **Add a routing rule** window that opens, enter *AZ500-WAFAG-RR01* for the **Rule name**.
 
 3. A routing rule requires a listener. On the **Listener** tab within the **Add a routing rule** window, enter the following values for the listener:
 
-    - **Listener name**: Enter *myListener* for the name of the listener.
+    - **Listener name**: Enter *AZ500-WAFAG-RR01L* for the name of the listener.
     - **Frontend IP**: Select **Public** to choose the public IP you created for the frontend.
   
       Accept the default values for the other settings on the **Listener** tab, then select the **Backend targets** tab to configure the rest of the routing rule.
 
    ![Create new application gateway: listener](../media/application-gateway-web-application-firewall-portal/application-gateway-create-rule-listener.png)
 
-4. On the **Backend targets** tab, select **myBackendPool** for the **Backend target**.
+4. On the **Backend targets** tab, select **AZ500-WAFAG-BEP** for the **Backend target**.
 
-5. For the **HTTP setting**, select **Create new** to create a new HTTP setting. The HTTP setting will determine the behavior of the routing rule. In the **Add an HTTP setting** window that opens, enter *myHTTPSetting* for the **HTTP setting name**. Accept the default values for the other settings in the **Add an HTTP setting** window, then select **Add** to return to the **Add a routing rule** window. 
+5. For the **HTTP setting**, select **Create new** to create a new HTTP setting. The HTTP setting will determine the behavior of the routing rule. In the **Add an HTTP setting** window that opens, enter *AZ500-WAFAG-BEP-HTTP* for the **HTTP setting name**. Accept the default values for the other settings in the **Add an HTTP setting** window, then select **Add** to return to the **Add a routing rule** window. 
 
      ![Create new application gateway: HTTP setting](../media/application-gateway-web-application-firewall-portal/application-gateway-create-httpsetting.png)
 
@@ -142,7 +142,7 @@ In this example, you'll use virtual machines as the target backend. You can eith
 
 To do this, you'll:
 
-1. Create two new VMs, *myVM* and *myVM2*, to be used as backend servers.
+1. Create two new VMs, *AZ500-WAFAG-VM01* and *AZ500-WAFAG-VM02*, to be used as backend servers.
 2. Install IIS on the virtual machines to verify that the application gateway was created successfully.
 3. Add the backend servers to the backend pool.
 
@@ -152,13 +152,13 @@ To do this, you'll:
 2. Select **Windows Server 2016 Datacenter** in the **Popular** list. The **Create a virtual machine** page appears.<br>Application Gateway can route traffic to any type of virtual machine used in its backend pool. In this example, you use a Windows Server 2016 Datacenter.
 3. Enter these values in the **Basics** tab for the following virtual machine settings:
 
-    - **Resource group**: Select **myResourceGroupAG** for the resource group name.
-    - **Virtual machine name**: Enter *myVM* for the name of the virtual machine.
-    - **Username**: Enter *azureuser* for the administrator user name.
+    - **Resource group**: Select **AZ500-WAFAG-RG** for the resource group name.
+    - **Virtual machine name**: Enter *AZ500-WAFAG-VM01* for the name of the virtual machine.
+    - **Username**: Enter *johndoe* for the administrator user name.
     - **Password**: Enter *Azure123456!* for the administrator password.
 4. Accept the other defaults and then select **Next: Disks**.  
 5. Accept the **Disks** tab defaults and then select **Next: Networking**.
-6. On the **Networking** tab, verify that **myVNet** is selected for the **Virtual network** and the **Subnet** is set to **myBackendSubnet**. Accept the other defaults and then select **Next: Management**.<br>Application Gateway can communicate with instances outside of the virtual network that it is in, but you need to ensure there's IP connectivity.
+6. On the **Networking** tab, verify that **AZ500-WAFAG-VN01** is selected for the **Virtual network** and the **Subnet** is set to **AZ500-WAFAG-BESN01**. Accept the other defaults and then select **Next: Management**.<br>Application Gateway can communicate with instances outside of the virtual network that it is in, but you need to ensure there's IP connectivity.
 7. On the **Management** tab, set **Boot diagnostics** to **Off**. Accept the other defaults and then select **Review + create**.
 8. On the **Review + create** tab, review the settings, correct any validation errors, and then select **Create**.
 9. Wait for the virtual machine creation to complete before continuing.
@@ -175,9 +175,9 @@ In this example, you install IIS on the virtual machines only to verify Azure cr
 
     ```azurepowershell-interactive
     Set-AzVMExtension `
-      -ResourceGroupName myResourceGroupAG `
+      -ResourceGroupName AZ500-WAFAG-RG `
       -ExtensionName IIS `
-      -VMName myVM `
+      -VMName AZ500-WAFAG-VM01 `
       -Publisher Microsoft.Compute `
       -ExtensionType CustomScriptExtension `
       -TypeHandlerVersion 1.4 `
@@ -185,7 +185,7 @@ In this example, you install IIS on the virtual machines only to verify Azure cr
       -Location EastUS
     ```
 
-3. Create a second virtual machine and install IIS by using the steps that you previously completed. Use *myVM2* for the virtual machine name and for the **VMName** setting of the **Set-AzVMExtension** cmdlet.
+3. Create a second virtual machine and install IIS by using the steps that you previously completed. Use *AZ500-WAFAG-VM02* for the virtual machine name and for the **VMName** setting of the **Set-AzVMExtension** cmdlet.
 
 ### Add backend servers to backend pool
 
@@ -193,11 +193,11 @@ In this example, you install IIS on the virtual machines only to verify Azure cr
 
 2. Select **Backend pools** from the left menu.
 
-3. Select **myBackendPool**.
+3. Select **AZ500-WAFAG-BEP**.
 
 4. Under **Targets**, select **Virtual machine** from the drop-down list.
 
-5. Under **VIRTUAL MACHINE** and **NETWORK INTERFACES**, select the **myVM** and **myVM2** virtual machines and their associated network interfaces from the drop-down lists.
+5. Under **VIRTUAL MACHINE** and **NETWORK INTERFACES**, select the **AZ500-WAFAG-VM01** and **AZ500-WAFAG-VM02** virtual machines and their associated network interfaces from the drop-down lists.
 
     ![Add backend servers](../media/application-gateway-web-application-firewall-portal/application-gateway-backend.png)
 
@@ -213,8 +213,8 @@ For this article, the application gateway uses a storage account to store data f
 
 1. Select **Create a resource** on the upper left-hand corner of the Azure portal.
 1. Select **Storage**, and then select **Storage account**.
-1. For *Resource group*, select **myResourceGroupAG** for the resource group.
-1. Type *myagstore1* for the name of the storage account.
+1. For *Resource group*, select **AZ500-WAFAG-RG** for the resource group.
+1. Type *AZ500-WAFAG-Storage* for the name of the storage account.
 1. Accept the default values for the other settings and then select **Review + Create**.
 1. Review the settings, and then select **Create**.
 
@@ -225,8 +225,8 @@ Configure diagnostics to record data into the ApplicationGatewayAccessLog, Appli
 1. In the left-hand menu, select **All resources**, and then select *myAppGateway*.
 2. Under Monitoring, select **Diagnostics settings**.
 3. select **Add diagnostics setting**.
-4. Enter *myDiagnosticsSettings* as the name for the diagnostics settings.
-5. Select **Archive to a storage account**, and then select **Configure** to select the *myagstore1* storage account that you previously created, and then select **OK**.
+4. Enter *AZ500-WAFAG-StorageDIA* as the name for the diagnostics settings.
+5. Select **Archive to a storage account**, and then select **Configure** to select the *AZ500-WAFAG-Storage* storage account that you previously created, and then select **OK**.
 6. Select the application gateway logs to collect and keep.
 7. Select **Save**.
 
@@ -244,7 +244,7 @@ Although IIS isn't required to create the application gateway, you installed it 
 
 1. Find the public IP address for the application gateway on its **Overview** page.![Record application gateway public IP address](../media/application-gateway-web-application-firewall-portal/application-gateway-record-ag-address.png) 
 
-   Or, you can select **All resources**, enter *myAGPublicIPAddress* in the search box, and then select it in the search results. Azure displays the public IP address on the **Overview** page.
+   Or, you can select **All resources**, enter *AZ500-WAFAG-PIP01* in the search box, and then select it in the search results. Azure displays the public IP address on the **Overview** page.
 1. Copy the public IP address, and then paste it into the address bar of your browser.
 1. Check the response. A valid response verifies that the application gateway was successfully created and it can successfully connect with the backend.
 
@@ -257,9 +257,9 @@ When you no longer need the resources that you created with the application gate
 To remove the resource group:
 
 1. On the left menu of the Azure portal, select **Resource groups**.
-2. On the **Resource groups** page, search for **myResourceGroupAG** in the list, then select it.
+2. On the **Resource groups** page, search for **AZ500-WAFAG-RG** in the list, then select it.
 3. On the **Resource group page**, select **Delete resource group**.
-4. Enter *myResourceGroupAG* for **TYPE THE RESOURCE GROUP NAME** and then select **Delete**.
+4. Enter *AZ500-WAFAG-RG* for **TYPE THE RESOURCE GROUP NAME** and then select **Delete**.
 
 ## Next steps
 
