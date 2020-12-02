@@ -49,7 +49,7 @@ Select **Networking** and then select **Application Gateway** in the **Featured*
 1. On the **Basics** tab, enter these values for the following application gateway settings:
 
    - **Resource group**: Select **AZ500-WAFAG-RG** for the resource group. If it doesn't exist, select **Create new** to create it.
-   - **Application gateway name**: Enter *myAppGateway* for the name of the application gateway.
+   - **Application gateway name**: Enter *AZ500-WAFAG-AG* for the name of the application gateway.
    - **Tier**: select **WAF V2**.
 
      ![Create new application gateway: Basics](../media/application-gateway-web-application-firewall-portal/application-gateway-create-basics.png)
@@ -189,7 +189,7 @@ In this example, you install IIS on the virtual machines only to verify Azure cr
 
 ### Add backend servers to backend pool
 
-1. Select **All resources**, and then select **myAppGateway**.
+1. Select **All resources**, and then select **AZ500-WAFAG-AG**.
 
 2. Select **Backend pools** from the left menu.
 
@@ -222,7 +222,7 @@ For this article, the application gateway uses a storage account to store data f
 
 Configure diagnostics to record data into the ApplicationGatewayAccessLog, ApplicationGatewayPerformanceLog, and ApplicationGatewayFirewallLog logs.
 
-1. In the left-hand menu, select **All resources**, and then select *myAppGateway*.
+1. In the left-hand menu, select **All resources**, and then select *AZ500-WAFAG-AG*.
 2. Under Monitoring, select **Diagnostics settings**.
 3. select **Add diagnostics setting**.
 4. Enter *AZ500-WAFAG-StorageDIA* as the name for the diagnostics settings.
